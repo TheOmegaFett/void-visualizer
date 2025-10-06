@@ -17,6 +17,14 @@ let bassOscillator;
 let noise;
 let panner;
 
+// Mute state
+let isMuted = false;
+const ORIGINAL_AMPS = {
+  main: 0.05,
+  bass: 0.03,
+  noise: 0.005,
+};
+
 // Visual pulse
 let pulseFrames = 0;
 let pulseX = 0;
@@ -58,11 +66,25 @@ function setup() {
   bassOscillator.start();
   noise.start();
 
-  mainOscillator.amp(0.05);
-  bassOscillator.amp(0.03);
-  noise.amp(0.005);
+  mainOscillator.amp(ORIGINAL_AMPS.main);
+  bassOscillator.amp(ORIGINAL_AMPS.bass);
+  noise.amp(ORIGINAL_AMPS.noise);
 
   background(0);
+
+  // --- Mute/Unmute Button ---
+  const muteButton = createButton("🔊 Sound On");
+  muteButton.position(20, 20);
+  muteButton.style("padding", "8px 14px");
+  muteButton.style("background", "#111");
+  muteButton.style("color", "#fff");
+  muteButton.style("border", "1px solid #555");
+  muteButton.style("border-radius", "6px");
+  muteButton.style("cursor", "pointer");
+
+  muteButton.mousePressed(() => {
+    toggleMute(muteButton);
+  });
 }
 
 function draw() {
@@ -268,9 +290,31 @@ function mousePressed() {
   bassOscillator.freq(100);
 }
 
-// Optional: Save frames manually
+// Toggle mute/unmute
+function toggleMute(btn) {
+  isMuted = !isMuted;
+
+  if (isMuted) {
+    mainOscillator.amp(0);
+    bassOscillator.amp(0);
+    noise.amp(0);
+    btn.html("🔇 Muted");
+  } else {
+    mainOscillator.amp(ORIGINAL_AMPS.main);
+    bassOscillator.amp(ORIGINAL_AMPS.bass);
+    noise.amp(ORIGINAL_AMPS.noise);
+    btn.html("🔊 Sound On");
+  }
+}
+
+// Optional: Save frames and keyboard mute toggle
 function keyPressed() {
   if (key === "s") {
     saveCanvas("void-algebra-cosmos", "png");
+  }
+
+  if (key === "m" || key === "M") {
+    const btn = document.querySelector("button"); // get the mute button
+    if (btn) toggleMute(btn);
   }
 }
