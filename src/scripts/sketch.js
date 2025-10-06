@@ -22,6 +22,11 @@ let pulseFrames = 0;
 let pulseX = 0;
 let pulseY = 0;
 
+// UI elements
+let particleCountSlider;
+let rebuildButton;
+let particleLabel;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
@@ -30,10 +35,28 @@ function setup() {
   rows = floor(height / scale);
   flowfield = new Array(cols * rows);
 
+  // --- UI setup ---
+  particleLabel = createP("Particles: 12000");
+  particleLabel.style("color", "#fff");
+  particleLabel.position(10, 10);
+
+  particleCountSlider = createSlider(2000, 12000, 12000, 1000);
+  particleCountSlider.position(10, 50);
+  particleCountSlider.style("width", "200px");
+  particleCountSlider.input(() => {
+    particleLabel.html("Particles: " + particleCountSlider.value());
+  });
+
+  rebuildButton = createButton("Rebuild Particles");
+  rebuildButton.position(10, 80);
+  rebuildButton.mousePressed(rebuildParticles);
+  rebuildButton.style("background", "#333");
+  rebuildButton.style("color", "#fff");
+  rebuildButton.style("padding", "5px 10px");
+  rebuildButton.style("border-radius", "5px");
+
   // Initialize particles
-  for (let i = 0; i < 12000; i++) {
-    particles[i] = new Particle();
-  }
+  createParticles(particleCountSlider.value());
 
   // Initial central flow node
   flowNodes.push({ x: cols / 2, y: rows / 2, strength: 3 });
@@ -73,12 +96,11 @@ function draw() {
 
   let t = ((frameCount % totalFrames) / totalFrames) * TWO_PI;
   let zoom = pow(1.02, frameCount % totalFrames);
-
   let globalHueShift = ((frameCount % totalFrames) / totalFrames) * 360;
 
   flowEnergy = 0;
 
-  // Generate flow field with fractal layers and flow nodes
+  // Generate flow field
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       let index = x + y * cols;
@@ -160,16 +182,37 @@ function draw() {
 
   // Flow node decay
   for (let node of flowNodes) {
-    node.strength *= 0.99; // Fade nodes
+    node.strength *= 0.99;
   }
   flowNodes = flowNodes.filter((node) => node.strength > 0.05);
+
+  // FPS counter
+  fill(255);
+  noStroke();
+  textSize(14);
+  text("FPS: " + floor(frameRate()), 10, height - 10);
 }
 
-// Flow function with parameters
+function createParticles(count) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function rebuildParticles() {
+  let count = particleCountSlider.value();
+  createParticles(count);
+  cols = floor(width / scale);
+  rows = floor(height / scale);
+  flowfield = new Array(cols * rows);
+  console.log("Rebuilt with", count, "particles");
+}
+
+// Flow function
 function voidAlgebraFlow(x, y, t, zoom, freqX, freqY, amplitude) {
   let cx = cols / 2;
   let cy = rows / 2;
-
   let dx = (x - cx) * zoom;
   let dy = (y - cy) * zoom;
 
@@ -253,7 +296,6 @@ class Particle {
   }
 }
 
-// Click to spawn new flow node with pulse and audio spike
 function mousePressed() {
   let nodeX = floor(mouseX / scale);
   let nodeY = floor(mouseY / scale);
@@ -263,12 +305,10 @@ function mousePressed() {
   pulseX = mouseX;
   pulseY = mouseY;
 
-  // Optional: trigger audio pulse
   mainOscillator.freq(800);
   bassOscillator.freq(100);
 }
 
-// Optional: Save frames manually
 function keyPressed() {
   if (key === "s") {
     saveCanvas("void-algebra-cosmos", "png");
