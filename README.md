@@ -18,7 +18,7 @@ An audio-reactive particle visualization where 12,000 particles flow through evo
 
 ## Performance Tips
 
-If the animation is slow or choppy, edit line 34 in [sketch.js](sketch.js#L34):
+If the animation is slow or choppy, edit line 34 in [src/scripts/sketch.js](src/scripts/sketch.js#L34):
 
 ```javascript
 // Reduce from 12000 to 2000-4000 for slower devices
@@ -59,7 +59,7 @@ Real-time synthesis with three layers:
 
 ## Customization
 
-Edit these values in [sketch.js](sketch.js) to customize:
+Edit these values in [src/scripts/sketch.js](src/scripts/sketch.js) to customize:
 
 ```javascript
 let scale = 20;           // Flow field resolution (lower = smoother)
