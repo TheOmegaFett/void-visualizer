@@ -1,7 +1,9 @@
 ---
-name: Add Mute/Unmute Toggle Button
+name: "🔇 Add Mute/Unmute Toggle Button"
 about: Create a UI button to toggle audio on/off
-labels: good first issue, help wanted, enhancement
+title: "[Feature] Add Mute/Unmute Toggle Button"
+labels: ["good first issue", "help wanted", "enhancement"]
+assignees: ""
 ---
 
 ## Goal

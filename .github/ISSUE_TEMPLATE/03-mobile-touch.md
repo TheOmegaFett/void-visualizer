@@ -1,7 +1,9 @@
 ---
-name: Add Mobile Touch Support
+name: "📱 Add Mobile Touch Support"
 about: Make touch events spawn flow nodes like mouse clicks
-labels: good first issue, help wanted, mobile
+title: "[Feature] Add Mobile Touch Support"
+labels: ["good first issue", "help wanted", "mobile"]
+assignees: ""
 ---
 
 ## Goal

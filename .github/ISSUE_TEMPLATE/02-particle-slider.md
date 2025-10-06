@@ -1,7 +1,9 @@
 ---
-name: Add Particle Count Slider
+name: "🎚️ Add Particle Count Slider"
 about: Create a UI slider to adjust particle density
-labels: good first issue, help wanted, enhancement
+title: "[Feature] Add Particle Count Slider"
+labels: ["good first issue", "help wanted", "enhancement"]
+assignees: ""
 ---
 
 ## Goal

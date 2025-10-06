@@ -1,7 +1,9 @@
 ---
-name: Add "Record Animation" Button
+name: "🎥 Add Record Animation Button"
 about: Save a short video/GIF capture of the visualization
-labels: good first issue, help wanted, enhancement
+title: "[Feature] Add Record Animation Button"
+labels: ["good first issue", "help wanted", "enhancement"]
+assignees: ""
 ---
 
 ## Goal

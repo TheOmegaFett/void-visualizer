@@ -1,7 +1,9 @@
 ---
-name: Improve README Quickstart
+name: "📖 Improve README Quickstart"
 about: Make the README even more beginner-friendly
-labels: good first issue, help wanted, documentation
+title: "[Docs] Improve README Quickstart"
+labels: ["good first issue", "help wanted", "documentation"]
+assignees: ""
 ---
 
 ## Goal
