@@ -2,6 +2,37 @@
 
 An immersive audio-reactive particle flow field visualization built with p5.js. Watch 12,000 particles dance through dynamically evolving flow fields with real-time audio synthesis.
 
+**🚀 [Try it now!](https://theomegafett.github.io/void-visualizer/)** *(After GitHub Pages is enabled)*
+
+## Quickstart (TL;DR)
+
+1. **Open the live link** (see above) or open `index.html` locally
+2. **Click anywhere** on the screen to unlock audio and spawn flow nodes
+3. **Press 's'** to save the current frame as a PNG
+4. **Keep clicking** to add more energy nodes and watch them interact
+5. **If it's slow**, see [Beginner Safe Mode](#beginner-safe-mode) below
+
+## Beginner Safe Mode
+
+If performance is sluggish on your laptop or mobile device, edit these values in [sketch.js](sketch.js):
+
+**Line 34**: Reduce particle count for better performance
+```javascript
+// Change from 12000 to 2000-4000 for slower devices
+for (let i = 0; i < 4000; i++) {  // was 12000
+  particles[i] = new Particle();
+}
+```
+
+**Lines 61-63**: Adjust audio volumes (or mute completely)
+```javascript
+mainOscillator.amp(0.05);  // Set to 0 to mute main tone
+bassOscillator.amp(0.03);  // Set to 0 to mute bass
+noise.amp(0.005);          // Set to 0 to mute ambient noise
+```
+
+**Note**: Audio requires user interaction (click/tap) to start due to browser autoplay policies. Your first click unlocks Web Audio.
+
 ## Features
 
 ### Visual
@@ -86,6 +117,20 @@ mainOscillator.amp(0.05);    // Main tone volume
 bassOscillator.amp(0.03);    // Bass volume
 noise.amp(0.005);            // Noise volume
 ```
+
+## Troubleshooting
+
+**Problem**: No sound when I open the page  
+**Solution**: Click anywhere on the canvas. Browsers require user interaction before enabling audio.
+
+**Problem**: Slow/choppy animation  
+**Solution**: Reduce particles to 2000-4000 in [sketch.js](sketch.js#L34). Close other browser tabs.
+
+**Problem**: Can't see flow nodes when I click  
+**Solution**: Look for subtle circular pulses. They fade after 30 frames (~0.5 seconds).
+
+**Problem**: Page won't load  
+**Solution**: Make sure you have internet connection (loads p5.js from CDN). Or download p5.js locally.
 
 ## Browser Compatibility
 
